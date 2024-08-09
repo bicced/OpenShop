@@ -9,15 +9,14 @@ export default function Home() {
         <div className="flex justify-center mb-4">
           <Image src={Logo} alt="OpenShop Logo" width={300} height={150} className="rounded-full" />
         </div>
-        <h1 className="text-4xl font-extrabold mb-4">Welcome to OpenShop</h1>
         <p className="text-lg mb-6">
           Decentralized marketplace for buying and selling physical products
         </p>
         <div className="flex justify-center space-x-4">
-          <Link href="/marketplace" className="px-8 py-3 bg-green-600 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 transition-transform transform hover:scale-105">
+          <Link href="/marketplace" className="px-8 py-3 bg-pink-600 text-white font-semibold rounded-lg shadow-md hover:bg-pink-700 transition-transform transform hover:scale-105">
             Buy Products
           </Link>
-          <Link href="/profile" className="px-8 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 transition-transform transform hover:scale-105">
+          <Link href="/profile" className="px-8 py-3 bg-orange-600 text-white font-semibold rounded-lg shadow-md hover:bg-orange-700 transition-transform transform hover:scale-105">
             Sell Products
           </Link>
         </div>

@@ -2,7 +2,7 @@
 import Products from '@/components/products';
 import { useState } from 'react';
 
-export default function SellerPage() {
+export default function Profile() {
   const [activeTab, setActiveTab] = useState('products');
 
   const renderContent = () => {
@@ -23,15 +23,15 @@ export default function SellerPage() {
 
   return (
     <div className="min-h-screen p-8 mt-20">
-      <h1 className="text-4xl font-bold mb-8">My Profile</h1>
+      <h1 className="text-5xl font-bold mb-8 bg-gradient-1 bg-clip-text text-transparent inline-block">My Profile</h1>
       <div className="flex space-x-4 mb-8">
-        <button className={`px-4 py-2 ${activeTab === 'products' ? 'bg-blue-600' : 'bg-white bg-opacity-30'} text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 transition-transform transform hover:scale-105`} onClick={() => setActiveTab('products')}>
+        <button className={`px-4 py-2 ${activeTab === 'products' ? 'bg-pink-600' : 'bg-white bg-opacity-30'} text-white font-semibold rounded-lg shadow-md hover:bg-pink-700 transition-transform transform hover:scale-105`} onClick={() => setActiveTab('products')}>
           My Products
         </button>
-        <button className={`px-4 py-2 ${activeTab === 'sales' ? 'bg-blue-600' : 'bg-white bg-opacity-30'} text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 transition-transform transform hover:scale-105`} onClick={() => setActiveTab('sales')}>
+        <button className={`px-4 py-2 ${activeTab === 'sales' ? 'bg-pink-600' : 'bg-white bg-opacity-30'} text-white font-semibold rounded-lg shadow-md hover:bg-pink-700 transition-transform transform hover:scale-105`} onClick={() => setActiveTab('sales')}>
           My Sales
         </button>
-        <button className={`px-4 py-2 ${activeTab === 'purchases' ? 'bg-blue-600' : 'bg-white bg-opacity-30'} text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 transition-transform transform hover:scale-105`} onClick={() => setActiveTab('purchases')}>
+        <button className={`px-4 py-2 ${activeTab === 'purchases' ? 'bg-pink-600' : 'bg-white bg-opacity-30'} text-white font-semibold rounded-lg shadow-md hover:bg-pink-700 transition-transform transform hover:scale-105`} onClick={() => setActiveTab('purchases')}>
           My Purchases
         </button>
       </div>
