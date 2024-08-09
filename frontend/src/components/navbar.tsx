@@ -9,10 +9,10 @@ export default function Navbar() {
   const pathname = usePathname();
 
   const navLinkClasses = (path: string) =>
-    `text-lg ${pathname === path ? 'text-blue-500' : 'text-white'} hover:text-gray-300`;
+    `text-lg ${pathname === path ? 'text-pink-500' : 'text-white'} hover:text-gray-300`;
 
   return (
-    <nav className="bg-white bg-opacity-30 shadow-lg fixed w-full top-0 z-10">
+    <nav className="bg-black bg-opacity-60 shadow-lg fixed w-full top-0 z-10">
       <div className="mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
