@@ -11,39 +11,39 @@ contract OpenShop {
         string imageUrl;
         uint price;
         bool isAvailable;
+        uint timestamp;
     }
 
     struct Purchase {
+        uint id;  
         uint productId;
+        address seller;
         address buyer;
         string deliveryAddress; // Encrypted address
         bool shipmentCreated;
+        uint shipmentId;
         uint timestamp;
     }
 
     struct Shipment {
+        uint id;
         uint purchaseId;
         string encryptedTrackingUrl;
-    }
-
-    struct Rating {
-        uint purchaseId;
-        uint rating;
-        string comment;
+        uint timestamp;
     }
 
     uint public productCount = 0;
     uint public purchaseCount = 0;
+    uint public shipmentCount = 0;
+
     mapping(uint => Product) public products;
     mapping(uint => Purchase) public purchases;
     mapping(uint => Shipment) public shipments;
-    mapping(uint => Rating) public ratings;
 
     event ProductCreated(uint productId, address indexed seller, string name, uint price);
-    event ProductPurchased(uint productId, address indexed buyer, string encryptedAddress);
+    event ProductPurchased(uint purchaseId, uint productId, address indexed buyer, string encryptedAddress);
     event ProductAvailabilityChanged(uint productId, bool isAvailable);
-    event ShipmentCreated(uint purchaseId, string encryptedTrackingUrl);
-    event SellerRated(uint purchaseId, uint rating, string comment);
+    event ShipmentCreated(uint shipmentId, uint purchaseId, string encryptedTrackingUrl);
 
     modifier validProduct(uint _productId) {
         require(_productId > 0 && _productId <= productCount, "Product does not exist");
@@ -52,6 +52,11 @@ contract OpenShop {
 
     modifier validPurchase(uint _purchaseId) {
         require(_purchaseId > 0 && _purchaseId <= purchaseCount, "Purchase does not exist");
+        _;
+    }
+
+    modifier validShipment(uint _shipmentId) {
+        require(_shipmentId > 0 && _shipmentId <= shipmentCount, "Shipment does not exist");
         _;
     }
 
@@ -77,7 +82,7 @@ contract OpenShop {
         require(_price > 0, "Price must be greater than zero");
 
         productCount++;
-        products[productCount] = Product(productCount, payable(msg.sender), _name, _description, _imageUrl, _price, true);
+        products[productCount] = Product(productCount, payable(msg.sender), _name, _description, _imageUrl, _price, true, block.timestamp);
 
         emit ProductCreated(productCount, msg.sender, _name, _price);
     }
@@ -89,9 +94,9 @@ contract OpenShop {
 
         _product.seller.transfer(msg.value);
         purchaseCount++;
-        purchases[purchaseCount] = Purchase(_productId, msg.sender, _encryptedAddress, false, block.timestamp);
+        purchases[purchaseCount] = Purchase(purchaseCount, _productId, _product.seller, msg.sender, _encryptedAddress, false, 0, block.timestamp);
 
-        emit ProductPurchased(_productId, msg.sender, _encryptedAddress);
+        emit ProductPurchased(purchaseCount, _productId, msg.sender, _encryptedAddress);
     }
 
     function changeProductAvailability(uint _productId, bool _isAvailable) public validProduct(_productId) onlySeller(_productId) {
@@ -105,19 +110,12 @@ contract OpenShop {
         require(product.seller == msg.sender, "Only the seller can create a shipment");
         require(!purchase.shipmentCreated, "Shipment already created");
 
-        shipments[_purchaseId] = Shipment(_purchaseId, _encryptedTrackingUrl);
+        shipmentCount++;
+        shipments[shipmentCount] = Shipment(shipmentCount, _purchaseId, _encryptedTrackingUrl, block.timestamp);
         purchase.shipmentCreated = true;
+        purchase.shipmentId = shipmentCount;  // Save shipmentId to the purchase
 
-        emit ShipmentCreated(_purchaseId, _encryptedTrackingUrl);
-    }
-
-    function rateSeller(uint _purchaseId, uint _rating, string memory _comment) public validPurchase(_purchaseId) onlyBuyer(_purchaseId) {
-        require(block.timestamp >= purchases[_purchaseId].timestamp + 30 days, "Rating can only be given 30 days after purchase");
-        require(_rating > 0 && _rating <= 5, "Rating must be between 1 and 5");
-
-        ratings[_purchaseId] = Rating(_purchaseId, _rating, _comment);
-
-        emit SellerRated(_purchaseId, _rating, _comment);
+        emit ShipmentCreated(shipmentCount, _purchaseId, _encryptedTrackingUrl);
     }
 
     function getProduct(uint _productId) public view validProduct(_productId) returns (Product memory) {
@@ -128,15 +126,9 @@ contract OpenShop {
         return purchases[_purchaseId];
     }
 
-    function getShipment(uint _purchaseId) public view validPurchase(_purchaseId) returns (Shipment memory) {
-        Shipment memory shipment = shipments[_purchaseId];
-        require(purchases[_purchaseId].buyer == msg.sender || products[purchases[_purchaseId].productId].seller == msg.sender, "Only buyer or seller can view shipment details");
+    function getShipment(uint _shipmentId) public view validShipment(_shipmentId) returns (Shipment memory) {
+        Shipment memory shipment = shipments[_shipmentId];
+        require(purchases[shipment.purchaseId].buyer == msg.sender || products[purchases[shipment.purchaseId].productId].seller == msg.sender, "Only buyer or seller can view shipment details");
         return shipment;
-    }
-
-    function getRating(uint _purchaseId) public view validPurchase(_purchaseId) returns (Rating memory) {
-        Rating memory rating = ratings[_purchaseId];
-        require(purchases[_purchaseId].buyer == msg.sender || products[purchases[_purchaseId].productId].seller == msg.sender, "Only buyer or seller can view rating details");
-        return rating;
     }
 }

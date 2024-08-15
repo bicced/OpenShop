@@ -1,4 +1,4 @@
-const CONTRACT_ADDRESS: `0x${string}` = '0x9A9f2CCfdE556A7E9Ff0848998Aa4a0CFD8863AE';
+const CONTRACT_ADDRESS: `0x${string}` = '0x2B4F80e20eaC049509C86f3B0742b6B4fB7C4bE2';
 
 const CONTRACT_ABI = [
 	{
@@ -121,6 +121,12 @@ const CONTRACT_ABI = [
 			{
 				"indexed": false,
 				"internalType": "uint256",
+				"name": "purchaseId",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
 				"name": "productId",
 				"type": "uint256"
 			},
@@ -159,56 +165,14 @@ const CONTRACT_ABI = [
 		"type": "function"
 	},
 	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_purchaseId",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_rating",
-				"type": "uint256"
-			},
-			{
-				"internalType": "string",
-				"name": "_comment",
-				"type": "string"
-			}
-		],
-		"name": "rateSeller",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
 		"anonymous": false,
 		"inputs": [
 			{
 				"indexed": false,
 				"internalType": "uint256",
-				"name": "purchaseId",
+				"name": "shipmentId",
 				"type": "uint256"
 			},
-			{
-				"indexed": false,
-				"internalType": "uint256",
-				"name": "rating",
-				"type": "uint256"
-			},
-			{
-				"indexed": false,
-				"internalType": "string",
-				"name": "comment",
-				"type": "string"
-			}
-		],
-		"name": "SellerRated",
-		"type": "event"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
 			{
 				"indexed": false,
 				"internalType": "uint256",
@@ -271,6 +235,11 @@ const CONTRACT_ABI = [
 						"internalType": "bool",
 						"name": "isAvailable",
 						"type": "bool"
+					},
+					{
+						"internalType": "uint256",
+						"name": "timestamp",
+						"type": "uint256"
 					}
 				],
 				"internalType": "struct OpenShop.Product",
@@ -295,8 +264,18 @@ const CONTRACT_ABI = [
 				"components": [
 					{
 						"internalType": "uint256",
+						"name": "id",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
 						"name": "productId",
 						"type": "uint256"
+					},
+					{
+						"internalType": "address",
+						"name": "seller",
+						"type": "address"
 					},
 					{
 						"internalType": "address",
@@ -312,6 +291,11 @@ const CONTRACT_ABI = [
 						"internalType": "bool",
 						"name": "shipmentCreated",
 						"type": "bool"
+					},
+					{
+						"internalType": "uint256",
+						"name": "shipmentId",
+						"type": "uint256"
 					},
 					{
 						"internalType": "uint256",
@@ -331,43 +315,7 @@ const CONTRACT_ABI = [
 		"inputs": [
 			{
 				"internalType": "uint256",
-				"name": "_purchaseId",
-				"type": "uint256"
-			}
-		],
-		"name": "getRating",
-		"outputs": [
-			{
-				"components": [
-					{
-						"internalType": "uint256",
-						"name": "purchaseId",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint256",
-						"name": "rating",
-						"type": "uint256"
-					},
-					{
-						"internalType": "string",
-						"name": "comment",
-						"type": "string"
-					}
-				],
-				"internalType": "struct OpenShop.Rating",
-				"name": "",
-				"type": "tuple"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_purchaseId",
+				"name": "_shipmentId",
 				"type": "uint256"
 			}
 		],
@@ -377,6 +325,11 @@ const CONTRACT_ABI = [
 				"components": [
 					{
 						"internalType": "uint256",
+						"name": "id",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
 						"name": "purchaseId",
 						"type": "uint256"
 					},
@@ -384,6 +337,11 @@ const CONTRACT_ABI = [
 						"internalType": "string",
 						"name": "encryptedTrackingUrl",
 						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "timestamp",
+						"type": "uint256"
 					}
 				],
 				"internalType": "struct OpenShop.Shipment",
@@ -451,6 +409,11 @@ const CONTRACT_ABI = [
 				"internalType": "bool",
 				"name": "isAvailable",
 				"type": "bool"
+			},
+			{
+				"internalType": "uint256",
+				"name": "timestamp",
+				"type": "uint256"
 			}
 		],
 		"stateMutability": "view",
@@ -481,8 +444,18 @@ const CONTRACT_ABI = [
 		"outputs": [
 			{
 				"internalType": "uint256",
+				"name": "id",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
 				"name": "productId",
 				"type": "uint256"
+			},
+			{
+				"internalType": "address",
+				"name": "seller",
+				"type": "address"
 			},
 			{
 				"internalType": "address",
@@ -501,6 +474,11 @@ const CONTRACT_ABI = [
 			},
 			{
 				"internalType": "uint256",
+				"name": "shipmentId",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
 				"name": "timestamp",
 				"type": "uint256"
 			}
@@ -509,29 +487,13 @@ const CONTRACT_ABI = [
 		"type": "function"
 	},
 	{
-		"inputs": [
+		"inputs": [],
+		"name": "shipmentCount",
+		"outputs": [
 			{
 				"internalType": "uint256",
 				"name": "",
 				"type": "uint256"
-			}
-		],
-		"name": "ratings",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "purchaseId",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "rating",
-				"type": "uint256"
-			},
-			{
-				"internalType": "string",
-				"name": "comment",
-				"type": "string"
 			}
 		],
 		"stateMutability": "view",
@@ -549,6 +511,11 @@ const CONTRACT_ABI = [
 		"outputs": [
 			{
 				"internalType": "uint256",
+				"name": "id",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
 				"name": "purchaseId",
 				"type": "uint256"
 			},
@@ -556,6 +523,11 @@ const CONTRACT_ABI = [
 				"internalType": "string",
 				"name": "encryptedTrackingUrl",
 				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "timestamp",
+				"type": "uint256"
 			}
 		],
 		"stateMutability": "view",

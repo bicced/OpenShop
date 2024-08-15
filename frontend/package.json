@@ -10,8 +10,12 @@
   },
   "dependencies": {
     "@tanstack/react-query": "^5.51.21",
+    "@types/crypto-js": "^4.2.2",
     "@wagmi/core": "^2.13.3",
     "connectkit": "^1.8.2",
+    "crypto-js": "^4.2.0",
+    "ecies-geth": "^1.7.1",
+    "ethers": "^6.13.2",
     "next": "14.2.5",
     "react": "^18",
     "react-dom": "^18",

@@ -2,6 +2,8 @@ import "../globals.css";
 import Wagmi from '@/config/wagmi';
 import { Inter } from "next/font/google";
 import type { Metadata } from "next";
+import { NotificationProvider } from '../config/notificationprovider';
+import NotificationList from "@/components/notificationlist";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,7 +20,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`bg-gradient text-white ${inter.className}`}>
-        <Wagmi>{children}</Wagmi>
+        <Wagmi>
+          <NotificationProvider>
+            {children}
+            <NotificationList />
+          </NotificationProvider>
+        </Wagmi>
       </body>
     </html>
   );
