@@ -1,13 +1,16 @@
+import { CONTRACT_CONFIG } from '@/contract';
 import React, { useState, ChangeEvent, FormEvent } from 'react';
-import { useAccount } from 'wagmi';
+import { useAccount, useWriteContract } from 'wagmi';
+import { useTransactionContext } from '@/config/transactioncontext';
 
 interface IProps {
   closeCreateProductModal: () => void;
-  handleCreateProduct: (formData: { name: string; description: string; price: string; imageUrl: string }) => void;
 }
 
-export default function CreateProduct({ closeCreateProductModal, handleCreateProduct }: IProps) {
+export default function CreateProduct({ closeCreateProductModal }: IProps) {
   const account = useAccount();
+  const { hash, writeContract, error } = useTransactionContext();
+  
   const [formData, setFormData] = useState({
     name: '',
     description: '',
@@ -27,6 +30,24 @@ export default function CreateProduct({ closeCreateProductModal, handleCreatePro
   const onCreateProduct = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     handleCreateProduct(formData);
+  };
+
+  const handleCreateProduct = async (formData: { name: string; description: string; price: string; imageUrl: string }) => {
+    const { name, description, price, imageUrl } = formData;
+    const priceInWei = BigInt(Math.floor(Number(price) * 10 ** account?.chain?.nativeCurrency.decimals));
+    if (priceInWei <= 0n) {
+      console.error("Price must be greater than zero.");
+      return;
+    }
+    const args = [name, description, imageUrl, priceInWei.toString()];
+    if (writeContract) {
+      writeContract({
+        ...CONTRACT_CONFIG,
+        functionName: 'createProduct',
+        args
+      });
+    }
+    closeCreateProductModal(); 
   };
 
   return (
