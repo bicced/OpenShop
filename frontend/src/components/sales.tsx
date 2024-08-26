@@ -1,17 +1,19 @@
 "use client";
 import { CONTRACT_CONFIG } from '@/contract/index';
 import { useEffect, useState } from 'react';
-import { useAccount, useReadContract, useSignMessage } from 'wagmi';
+import { useAccount, useReadContract } from 'wagmi';
 import { readContracts } from '@wagmi/core';
 import { config } from '@/config/wagmi';
+import { useTransactionContext } from '@/config/transactioncontext';
+
 
 export default function Sales() {
   const account = useAccount();
+  const { writeContract } = useTransactionContext();
   const [sales, setSales] = useState<any[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedPurchase, setSelectedPurchase] = useState(null);
   const [shipmentInfo, setShipmentInfo] = useState('');
-  const { signMessageAsync } = useSignMessage();
 
   const { data: purchaseCount } = useReadContract({
     ...CONTRACT_CONFIG,
@@ -59,6 +61,13 @@ export default function Sales() {
     // Handle the shipment creation logic here
     // For example, sending the shipment info to a contract or backend
     console.log(`Shipment info submitted: ${shipmentInfo} for purchase ID: ${selectedPurchase.id}`);
+    if (!writeContract) return;
+
+    writeContract({
+      ...CONTRACT_CONFIG,
+      functionName: 'createShipment',
+      args: [selectedPurchase.id, shipmentInfo],
+    });
     closeModal();
   };
 
@@ -110,6 +119,7 @@ export default function Sales() {
             <button
               className="mt-4 px-4 py-2 text-white font-semibold rounded-lg shadow-md transition-transform transform w-full bg-pink-600 hover:bg-pink-700 hover:scale-105"
               type="submit"
+              onClick={handleShipmentSubmit}
               aria-label="Create Shipment"
             >
               Create Shipment

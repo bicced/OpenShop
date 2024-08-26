@@ -1,6 +1,6 @@
 import { CONTRACT_CONFIG } from '@/contract';
 import React, { useState, ChangeEvent, FormEvent } from 'react';
-import { useAccount, useWriteContract } from 'wagmi';
+import { useAccount } from 'wagmi';
 import { useTransactionContext } from '@/config/transactioncontext';
 
 interface IProps {
@@ -9,7 +9,7 @@ interface IProps {
 
 export default function CreateProduct({ closeCreateProductModal }: IProps) {
   const account = useAccount();
-  const { hash, writeContract, error } = useTransactionContext();
+  const { writeContract } = useTransactionContext();
   
   const [formData, setFormData] = useState({
     name: '',
@@ -40,13 +40,12 @@ export default function CreateProduct({ closeCreateProductModal }: IProps) {
       return;
     }
     const args = [name, description, imageUrl, priceInWei.toString()];
-    if (writeContract) {
-      writeContract({
-        ...CONTRACT_CONFIG,
-        functionName: 'createProduct',
-        args
-      });
-    }
+    if (!writeContract) return;
+    writeContract({
+      ...CONTRACT_CONFIG,
+      functionName: 'createProduct',
+      args
+    });
     closeCreateProductModal(); 
   };
 

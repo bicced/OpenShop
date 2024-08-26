@@ -2,13 +2,16 @@
 import CreateProduct from './createproduct';
 import { CONTRACT_CONFIG } from '@/contract/index'
 import { useEffect, useState } from 'react'
-import { useAccount, useReadContract, useWriteContract } from 'wagmi'
+import { useAccount, useReadContract } from 'wagmi'
 import { readContracts } from '@wagmi/core'
 import { config } from '@/config/wagmi'
+import { useTransactionContext } from '@/config/transactioncontext';
 import Product from './product';
+
 
 export default function Products({isOwner}: {isOwner: boolean}) {
   const account = useAccount();
+  const { writeContract } = useTransactionContext();
   const [products, setProducts] = useState<any[]>([])
   const [showCreateProductModal, setShowCreateProductModal] = useState<boolean>(false);
 
@@ -18,8 +21,6 @@ export default function Products({isOwner}: {isOwner: boolean}) {
     args: [],
   })
 
-  const { data: hash, writeContract, error } = useWriteContract();
-
 
   useEffect(() => {
     getProducts()
@@ -27,6 +28,7 @@ export default function Products({isOwner}: {isOwner: boolean}) {
 
 
   const handlePurchaseProduct = async (productId: number, price: number, encryptedAddress: string) => {
+    if (!writeContract) return;
     writeContract({
       ...CONTRACT_CONFIG,
       functionName: 'purchaseProduct',

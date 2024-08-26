@@ -15,8 +15,6 @@ export default function Purchases() {
     args: [],
   })
 
-  console.log(purchases);
-
   useEffect(() => {
     getPurchases()
   } , [purchaseCount])
@@ -43,12 +41,36 @@ export default function Purchases() {
     }
   }
 
+  async function renderShipmentInfo(purchase: any) { 
+    console.log(purchase)
+    if (!purchase.shipmentCreated) return;
+    const contracts: any = [];
+    contracts.push({
+      ...CONTRACT_CONFIG,
+      functionName: 'getShipment',
+      args: [Number(purchase.shipmentId)]
+    })
+    const response = await readContracts(config, {
+      contracts
+    })
+
+    console.log(response)
+    return;
+    // return (
+    //   <div className="mb-2">
+    //     <span className="font-semibold text-white">Shipment Info:</span>
+    //   </div>
+    // );
+
+  }
+
   return (
     <ul>
       {purchases.map((purchase, index) => (
         <li key={index} className="relative p-4 bg-white bg-opacity-30 rounded-lg shadow hover:shadow-lg transition-shadow">
           <div className="absolute top-2 right-2">
             <span
+              onClick={() => {renderShipmentInfo(purchase)}}
               className={`px-2 py-1 text-xs font-semibold rounded-lg ${
                 purchase.shipmentCreated ? 'bg-green-500 text-white' : 'bg-yellow-500 text-white'
               }`}
