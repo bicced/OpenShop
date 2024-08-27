@@ -34,6 +34,10 @@ export default function CreateProduct({ closeCreateProductModal }: IProps) {
 
   const handleCreateProduct = async (formData: { name: string; description: string; price: string; imageUrl: string }) => {
     const { name, description, price, imageUrl } = formData;
+    if (!account?.chain?.nativeCurrency.decimals) {
+      console.error("Native currency decimals not found.");
+      return;
+    }
     const priceInWei = BigInt(Math.floor(Number(price) * 10 ** account?.chain?.nativeCurrency.decimals));
     if (priceInWei <= 0n) {
       console.error("Price must be greater than zero.");
