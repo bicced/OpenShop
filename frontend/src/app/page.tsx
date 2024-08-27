@@ -1,14 +1,12 @@
 import Image from "next/image";
-import Logo from "../../public/logo.svg";
+import Logo from "../../public/logoMain.svg";
 import Link from "next/link";
 
 export default function Home() {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r">
-      <div className="text-center p-8 bg-white bg-opacity-30 rounded-lg shadow-lg">
-        <div className="flex justify-center mb-4">
-          <Image src={Logo} alt="OpenShop Logo" width={300} height={150} className="rounded-full" />
-        </div>
+      <div className="flex flex-col items-center justify-center text-center p-8 bg-white bg-opacity-30 rounded-lg shadow-lg">
+        <Image src={Logo} alt="OpenShop Logo" className="max-w-sm max-h-xs mb-[-50px] mt-[-50px]" />
         <p className="text-lg mb-6">
           Decentralized marketplace for buying and selling physical products
         </p>
