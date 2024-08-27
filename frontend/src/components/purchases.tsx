@@ -79,7 +79,10 @@ export default function Purchases() {
             </span>
           </div>
           <div className="mb-2">
-            <span className="font-semibold text-white">Product ID:</span> {Number(purchase.id)}
+            <span className="font-semibold text-white">Purchase ID:</span> {Number(purchase.id)}
+          </div>
+          <div className="mb-2">
+            <span className="font-semibold text-white">Product ID:</span> {Number(purchase.productId)}
           </div>
           <div className="mb-2">
             <span className="font-semibold text-white">Seller:</span> {purchase.seller}
