@@ -1,8 +1,13 @@
 # OpenShop
 
-OpenShop is a fully on-chain marketplace for physical goods built on the BNB Chain. This repository includes both the smart contract and the frontend, allowing users to create, purchase, and manage products while ensuring secure transactions and encrypted delivery details.
+OpenShop is a fully on-chain marketplace for physical goods. This repository includes both the smart contract and the frontend, allowing users to create, purchase, and manage products.
 
 This was built for the BNB Hackathon and currently deployed on BSC Testnet: 0x555F64D0FBF7f0A5D308E6165F98F41556f31f7F
+Frontend: https://open-shop-lyart.vercel.app/
+
+<img width="1440" alt="Screenshot 2024-08-27 at 1 10 23 AM" src="https://github.com/user-attachments/assets/082f2c15-052f-49fa-9c49-7f1bb4a0eac2">
+
+Note: This is an incomplete project, there are still important features to implement, such as the masking of delivery address & tracking url via encryption.
 
 ## Features
 
@@ -10,7 +15,7 @@ This was built for the BNB Hackathon and currently deployed on BSC Testnet: 0x55
 - **Product Purchase**: Buyers can purchase listed products, providing an encrypted delivery address for privacy.
 - **Shipment Management**: Sellers can create shipments for purchased products, with encrypted tracking information stored on-chain.
 - **Availability Control**: Sellers can toggle the availability of their products.
-- **Secure Data**: Delivery addresses and tracking URLs are encrypted, ensuring privacy and security for both buyers and sellers.
+- **Secure Data**: Delivery addresses and tracking URLs are encrypted, ensuring privacy and security for both buyers and sellers. //incomplete
 
 ## Smart Contract Overview
 
@@ -50,31 +55,10 @@ The frontend of OpenShop is a web application that interacts with the smart cont
 ### Technologies Used
 
 - **React**: For building the user interface.
-- **Web3.js**: For interacting with the smart contract on the BNB Chain.
 - **Tailwind CSS**: For styling the application.
 - **Ethers.js**: For blockchain interactions.
 
 ## Installation
-
-### Smart Contract
-
-1. **Clone the Repository**:
-    ```bash
-    git clone https://github.com/yourusername/OpenShop.git
-    cd OpenShop
-    ```
-
-2. **Install Dependencies**:
-    Ensure you have Node.js and npm installed. Then, install the required dependencies:
-    ```bash
-    npm install
-    ```
-
-3. **Deploy the Contract**:
-    Use your preferred method (e.g., Hardhat, Truffle) to deploy the contract to a blockchain network.
-
-4. **Interact with the Contract**:
-    Use a Web3 provider like Remix, Hardhat, or a front-end application to interact with the deployed contract.
 
 ### Frontend
 
@@ -85,15 +69,15 @@ The frontend of OpenShop is a web application that interacts with the smart cont
 
 2. **Install Frontend Dependencies**:
     ```bash
-    npm install
+    pnpm install
     ```
 
-3. **Configure Environment Variables**:
-    Create a `.env` file in the `frontend` directory and add the necessary environment variables (e.g., API keys, contract addresses).
+3. **Configure RPC**:
+    Modify the RPC endpoint under config/wagmi
 
 4. **Start the Development Server**:
     ```bash
-    npm start
+    pnpm dev
     ```
     This will start the application on `http://localhost:3000`.
 
@@ -113,7 +97,7 @@ The frontend of OpenShop is a web application that interacts with the smart cont
 
 ## Security Considerations
 
-- **Encryption**: Ensure that delivery addresses and tracking URLs are properly encrypted before sending them to the smart contract.
+- **Encryption**: Ensure that delivery addresses and tracking URLs are properly encrypted before sending them to the smart contract. (incomplete)
 - **Data Privacy**: Only the buyer and seller have access to sensitive shipment details, ensuring privacy.
 
 ## License
