@@ -78,7 +78,7 @@ export default function Product({ product, handlePurchaseProduct }: IProps) {
         handlePurchaseProduct(product.id, product.price, contractAddress); // Implement and pass the encrypted address to the onSubmit handler
         setIsModalOpen(false);
       } catch (error) {
-        console.error('Encryption failed:', error.message);
+        console.error('Encryption failed:', error);
       }
     };
   

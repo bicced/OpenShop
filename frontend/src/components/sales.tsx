@@ -12,7 +12,7 @@ export default function Sales() {
   const { writeContract } = useTransactionContext();
   const [sales, setSales] = useState<any[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedPurchase, setSelectedPurchase] = useState(null);
+  const [selectedPurchase, setSelectedPurchase] = useState<any | null>(null);
   const [shipmentInfo, setShipmentInfo] = useState('');
 
   const { data: purchaseCount } = useReadContract({
@@ -60,6 +60,7 @@ export default function Sales() {
   const handleShipmentSubmit = async () => {
     // Handle the shipment creation logic here
     // For example, sending the shipment info to a contract or backend
+
     console.log(`Shipment info submitted: ${shipmentInfo} for purchase ID: ${selectedPurchase.id}`);
     if (!writeContract) return;
 
