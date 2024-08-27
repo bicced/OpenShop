@@ -2,7 +2,7 @@
 import Navbar from "@/components/navbar";
 import { http, createConfig } from 'wagmi';
 
-import { anvil, optimismSepolia, bscTestnet } from 'wagmi/chains';
+import { bscTestnet } from 'wagmi/chains';
 import { getDefaultConfig } from "connectkit";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { WagmiProvider } from 'wagmi';
