@@ -67,7 +67,7 @@ export default function Purchases() {
   return (
     <ul>
       {purchases.map((purchase, index) => (
-        <li key={index} className="relative p-4 bg-white bg-opacity-30 rounded-lg shadow hover:shadow-lg transition-shadow">
+        <li key={index} className="relative p-4 bg-white bg-opacity-30 rounded-lg shadow hover:shadow-lg transition-shadow mb-5">
           <div className="absolute top-2 right-2">
             <span
               onClick={() => {renderShipmentInfo(purchase)}}

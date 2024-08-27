@@ -76,7 +76,7 @@ export default function Sales() {
     <>
       <ul>
         {sales.map((purchase, index) => (
-          <li key={index} className="relative p-4 bg-white bg-opacity-30 rounded-lg shadow hover:shadow-lg transition-shadow">
+          <li key={index} className="relative p-4 bg-white bg-opacity-30 rounded-lg shadow hover:shadow-lg transition-shadow mb-5">
             <div className="absolute top-2 right-2">
               {purchase.shipmentCreated ? (
                 <span className="px-2 py-1 text-xs font-semibold rounded-lg bg-green-500 text-white">Completed</span>

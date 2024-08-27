@@ -1,7 +1,7 @@
 'use client';
 import Link from 'next/link';
 import Image from 'next/image';
-import Logo from '../../public/logo.svg';
+import Logo from '../../public/logoSide.svg';
 import { usePathname } from 'next/navigation';
 import { ConnectKitButton } from 'connectkit';
 
